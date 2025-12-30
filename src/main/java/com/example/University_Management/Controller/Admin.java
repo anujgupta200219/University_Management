@@ -2,6 +2,7 @@ package com.example.University_Management.Controller;
 
 import com.example.University_Management.DTO.Course_Request_DTO;
 import com.example.University_Management.DTO.Department_Request_DTO;
+import com.example.University_Management.Service.Course_Service;
 import com.example.University_Management.Service.Department_Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,13 +21,16 @@ public class Admin {
     @Autowired
     private Department_Service departmentService;
 
+    @Autowired
+    private Course_Service courseService;
+
     @PostMapping("/savedepartment")
     public ResponseEntity<?> saveDepartment(@RequestBody Department_Request_DTO departmentRequestDto){
         return new ResponseEntity<>(departmentService.saveDepartment(departmentRequestDto), HttpStatus.OK);
     }
 
-    @PostMapping
-    public void saveCourse(@RequestBody Course_Request_DTO courseRequestDto){
-
+    @PostMapping("/savecourse")
+    public ResponseEntity<?> saveCourse(@RequestBody Course_Request_DTO courseRequestDto){
+        return new ResponseEntity<>(courseService.saveCourse(courseRequestDto),HttpStatus.OK);
     }
 }
