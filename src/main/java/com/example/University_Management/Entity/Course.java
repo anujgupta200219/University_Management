@@ -20,11 +20,6 @@ public class Course {
 
     private int credit;
 
-    @ManyToMany
-    @JoinTable(
-            name = "student_course",
-            joinColumns = @JoinColumn(referencedColumnName = "courseId"),
-            inverseJoinColumns = @JoinColumn(referencedColumnName = "studentId")
-    )
+    @ManyToMany(mappedBy = "course")
     private List<Student> student;
 }

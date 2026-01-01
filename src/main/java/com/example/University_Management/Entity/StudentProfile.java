@@ -18,7 +18,7 @@ public class StudentProfile {
     private String address;
 
     @OneToOne
-    @JoinColumn(name = "Many_Students", unique = true)
+    @JoinColumn(name = "Students", unique = true)
     private Student student;
 
 }

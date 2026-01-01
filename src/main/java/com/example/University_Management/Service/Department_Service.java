@@ -1,7 +1,7 @@
 package com.example.University_Management.Service;
 
 
-import com.example.University_Management.DTO.Department_Request_DTO;
+import com.example.University_Management.DTO.departmentRequestDTO;
 import com.example.University_Management.Entity.Department;
 import com.example.University_Management.Repository.Department_Repository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class Department_Service {
     @Autowired
     private Department_Repository departmentRepository;
 
-    public String saveDepartment(Department_Request_DTO departmentRequestDto){
+    public String saveDepartment(departmentRequestDTO departmentRequestDto){
         Department department=new Department();
         department.setName(departmentRequestDto.getName());
         department.setLocation(departmentRequestDto.getLocation());

@@ -19,13 +19,19 @@ public class Student {
 
     private String email;
 
-    @OneToOne(mappedBy = "student")
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
     private StudentProfile studentProfile;
 
     @ManyToOne
+    @JoinColumn(name = "deptId")
     private Department department;
 
-    @ManyToMany(mappedBy = "student")
+    @ManyToMany
+    @JoinTable(
+            name = "student_course",
+            joinColumns = @JoinColumn(referencedColumnName = "studentId"),
+            inverseJoinColumns = @JoinColumn(referencedColumnName = "courseId")
+    )
     private List<Course> course;
 
 }

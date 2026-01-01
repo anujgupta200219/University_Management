@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Course_Request_DTO {
+public class departmentRequestDTO {
 
-    private String title;
+    private String name;
 
-    private int credit;
+    private String location;
 }
