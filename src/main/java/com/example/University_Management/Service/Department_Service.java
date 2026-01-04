@@ -1,7 +1,7 @@
 package com.example.University_Management.Service;
 
 
-import com.example.University_Management.DTO.departmentRequestDTO;
+import com.example.University_Management.DTO.Request.departmentRequestDTO;
 import com.example.University_Management.Entity.Department;
 import com.example.University_Management.Repository.Department_Repository;
 import org.springframework.beans.factory.annotation.Autowired;

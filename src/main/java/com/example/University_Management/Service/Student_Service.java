@@ -1,7 +1,8 @@
 package com.example.University_Management.Service;
 
-import com.example.University_Management.DTO.studentProfileDTO;
-import com.example.University_Management.DTO.studentRequestDTO;
+import com.example.University_Management.DTO.Request.studentProfileDTO;
+import com.example.University_Management.DTO.Request.studentRequestDTO;
+import com.example.University_Management.DTO.Response.studentResponseDTO;
 import com.example.University_Management.Entity.Course;
 import com.example.University_Management.Entity.Department;
 import com.example.University_Management.Entity.Student;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class Student_Service {
@@ -63,10 +65,24 @@ public class Student_Service {
             throw new studentNotFoundException("Student not found");
         }
         StudentProfile profile = studentProfileRepository.findById(byId.get().getStudentProfile().getProfileId()).orElse(new StudentProfile());
-            profile.setAddress(student.getAddress());
-            profile.setPhone(student.getPhone());
-            profile.setStudent(byId.get());
-            return studentProfileRepository.save(profile);
+        profile.setAddress(student.getAddress());
+        profile.setPhone(student.getPhone());
+        profile.setStudent(byId.get());
+        return studentProfileRepository.save(profile);
+    }
 
+    public studentResponseDTO getStudentbyId(long id){
+        Optional<Student> byId = studentRepository.findById(id);
+        if (byId.isEmpty())
+            throw new studentNotFoundException("Student with ID "+id+" not found");
+        Student student=byId.get();
+        return new studentResponseDTO(
+                student.getName(),
+                student.getEmail(),
+                student.getStudentProfile().getPhone(),
+                student.getStudentProfile().getAddress(),
+                student.getDepartment().getName(),
+                student.getCourse().stream().map(Course::getTitle).collect(Collectors.toList())
+        );
     }
 }

@@ -1,9 +1,9 @@
 package com.example.University_Management.Controller;
 
-import com.example.University_Management.DTO.courseRequestDTO;
-import com.example.University_Management.DTO.departmentRequestDTO;
-import com.example.University_Management.DTO.studentProfileDTO;
-import com.example.University_Management.DTO.studentRequestDTO;
+import com.example.University_Management.DTO.Request.courseRequestDTO;
+import com.example.University_Management.DTO.Request.departmentRequestDTO;
+import com.example.University_Management.DTO.Request.studentProfileDTO;
+import com.example.University_Management.DTO.Request.studentRequestDTO;
 import com.example.University_Management.Service.Course_Service;
 import com.example.University_Management.Service.Department_Service;
 import com.example.University_Management.Service.Student_Service;
@@ -64,6 +64,16 @@ public class Admin {
         try{
             studentService.saveStudentProfile(studentProfileDTO);
             return new ResponseEntity<>("Student Profile Updated",HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/getstudent/{myid}")
+    public ResponseEntity<?> getStudentbyId(@PathVariable long myid){
+        try {
+            return new ResponseEntity<>(studentService.getStudentbyId(myid),HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
