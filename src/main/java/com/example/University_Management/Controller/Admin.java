@@ -2,6 +2,7 @@ package com.example.University_Management.Controller;
 
 import com.example.University_Management.DTO.courseRequestDTO;
 import com.example.University_Management.DTO.departmentRequestDTO;
+import com.example.University_Management.DTO.studentProfileDTO;
 import com.example.University_Management.DTO.studentRequestDTO;
 import com.example.University_Management.Service.Course_Service;
 import com.example.University_Management.Service.Department_Service;
@@ -44,6 +45,17 @@ public class Admin {
         try{
             studentService.saveStudent(studentRequestDTO);
             return new ResponseEntity<>("Student "+studentRequestDTO.getName()+" saved",HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PostMapping("/saveprofile")
+    public ResponseEntity<?> saveProfile(@RequestBody studentProfileDTO studentProfileDTO){
+        try{
+            studentService.saveStudentProfile(studentProfileDTO);
+            return new ResponseEntity<>("Student Profile Saved",HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);

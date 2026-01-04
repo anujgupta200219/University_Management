@@ -1,13 +1,17 @@
 package com.example.University_Management.Service;
 
+import com.example.University_Management.DTO.studentProfileDTO;
 import com.example.University_Management.DTO.studentRequestDTO;
 import com.example.University_Management.Entity.Course;
 import com.example.University_Management.Entity.Department;
 import com.example.University_Management.Entity.Student;
+import com.example.University_Management.Entity.StudentProfile;
 import com.example.University_Management.Exceptions.courseNotFoundException;
 import com.example.University_Management.Exceptions.departmentNotFoundException;
+import com.example.University_Management.Exceptions.studentNotFoundException;
 import com.example.University_Management.Repository.Course_Repository;
 import com.example.University_Management.Repository.Department_Repository;
+import com.example.University_Management.Repository.StudentProfile_Repository;
 import com.example.University_Management.Repository.Student_Repository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +30,9 @@ public class Student_Service {
 
     @Autowired
     private Course_Repository courseRepository;
+
+    @Autowired
+    private StudentProfile_Repository studentProfileRepository;
 
     @Transactional
     public Student saveStudent(studentRequestDTO studentRequestDTO){
@@ -46,10 +53,19 @@ public class Student_Service {
         student.setDepartment(department.get());
         student.setCourse(allById);
 
-        for(Course course: allById){
-
-        }
-
         return studentRepository.save(student);
+    }
+
+    @Transactional
+    public StudentProfile saveStudentProfile(studentProfileDTO student){
+        Optional<Student> byId = studentRepository.findById(student.getStudentId());
+        if(byId.isEmpty()){
+            throw new studentNotFoundException("Student not found");
+        }
+        StudentProfile studentpro=new StudentProfile();
+        studentpro.setAddress(student.getAddress());
+        studentpro.setPhone(student.getPhone());
+        studentpro.setStudent(byId.get());
+        return studentProfileRepository.save(studentpro);
     }
 }
