@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Component
 @RestController
@@ -56,6 +53,17 @@ public class Admin {
         try{
             studentService.saveStudentProfile(studentProfileDTO);
             return new ResponseEntity<>("Student Profile Saved",HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/updateprofile")
+    public ResponseEntity<?> updateProfile(@RequestBody studentProfileDTO studentProfileDTO){
+        try{
+            studentService.saveStudentProfile(studentProfileDTO);
+            return new ResponseEntity<>("Student Profile Updated",HttpStatus.OK);
         }
         catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);

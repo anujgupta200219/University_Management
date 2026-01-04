@@ -62,10 +62,11 @@ public class Student_Service {
         if(byId.isEmpty()){
             throw new studentNotFoundException("Student not found");
         }
-        StudentProfile studentpro=new StudentProfile();
-        studentpro.setAddress(student.getAddress());
-        studentpro.setPhone(student.getPhone());
-        studentpro.setStudent(byId.get());
-        return studentProfileRepository.save(studentpro);
+        StudentProfile profile = studentProfileRepository.findById(byId.get().getStudentProfile().getProfileId()).orElse(new StudentProfile());
+            profile.setAddress(student.getAddress());
+            profile.setPhone(student.getPhone());
+            profile.setStudent(byId.get());
+            return studentProfileRepository.save(profile);
+
     }
 }
